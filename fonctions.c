@@ -6,7 +6,15 @@ typedef struct ville{
 	char nom[1000];
 	int nbtrajet;
 	int nbconducteurs;
+	char* condu[1000]={0};
+	char* trajet[1000]={0};
+	int i=0;
+	int j=0;
 }Ville;
+
+typedef struct top{
+	Ville tab[10]=NULL;
+}Top;
 	
 typedef struct arbre{
 	Ville* elmt;
@@ -42,6 +50,16 @@ pArbre creationAVL(Ville v){
 	a->fd=NULL;
 	a->eq=0;
 	return a;
+}
+
+int filsDroit(pArbre a){
+	if(a==NULL){
+		return -1;
+	}
+	if(a->fd==NULL){
+		return 0;
+	}
+	return 1; 
 }
 
 int equilibre(pArbre a){
@@ -169,7 +187,10 @@ pArbre insertAVL(pArbre a,Ville v,int* h){
 	return a;
 }
 
-int checkExistence(char *chaine,char tableau[1000]) {
+
+
+
+int checkExistence(char *chaine,char* tableau[1000]) {
     int i = 0;
     while(tableau[i] != NULL){
         if (strcmp(chaine, tableau[i]) == 0) {
@@ -180,55 +201,129 @@ int checkExistence(char *chaine,char tableau[1000]) {
     return 0; // La chaîne n'existe pas dans le tableau
 }
 
-
-void T(FILE* fichier,pArbre a,int* h){
+pArbre T(FILE* fichier,pArbre a,int* h){
 	char line[1000];
-	char condu[1000];
-	int trajet[1000];
 	Ville nouv;
+	Ville nouv2;
 	while(fgets(line,sizeof(line),fichier) != NULL){
 		char *token = strtok(line, ";");
 		int numc=1;
-		int i=0;
-		int j=0;
 		nouv.nbtrajet=0;
 		nouv.nbconducteurs=0;
 		while (token != NULL){
-			if(numc==1){
-				strcpy(nouv.nom,token);
+			if(numc==4){
+				strcpy(nouv.nom,token);	
 			}
-			if(numc==2){
-				if(!checkExistence(token,condu)){
-					strcpy(condu[i],token);
-					i++;
+			/*if(numc==6){
+				if(!checkExistence(token,nouv.condu)){
+					strcpy(nouv.condu[i],token);
+					nouv.i++;
 					nouv.nbconducteurs++;
 				}
-			}
-			if(numc==3){
-				if(!checkExistence(token,trajet)){
-					strcpy(trajet[j],token);
-					j++;
+			}*/
+			if(numc==1){
+				if(!checkExistence(token,nouv.trajet)){
+					printf("%s\n",token);
+					strcpy(nouv.trajet[j],token);
+					nouv.j++;
 					nouv.nbtrajet++;
 				}	
-			}			
+			}		
+			/*if(numc==2 && token=="1"){
+				char *token2 = strtok(line, ";");
+				int numc2=1;
+				nouv.nbtrajet2=0;
+				nouv.nbconducteurs2=0;
+				while (token2 != NULL){
+					if(numc2==4){
+						strcpy(nouv2.nom,token2);	
+					}
+					if(numc2==6){
+						if(!checkExistence(token2,nouv2.condu)){
+							strcpy(nouv2.condu[i],token2);
+							nouv2.i++;
+							nouv2.nbconducteurs++;
+						}
+					}
+					if(numc2==1){
+						if(!checkExistence(token2,nouv2.trajet)){
+							printf("%s\n",token2);
+							strcpy(nouv2.trajet[j],token2);
+							nouv2.j++;
+							nouv2.nbtrajet++;
+						}	
+					}		
+					token2 = strtok(NULL, ";");
+					numc2++;		
+				}			
+			}*/
 			token = strtok(NULL, ";");
-			numc++;			
+			numc++;
 		}
 		printf("%d %d \n",nouv.nbtrajet,nouv.nbconducteurs);
+		/*if(recherche(a,nouv)!=NULL){
+			pArbre temp;
+			temp=recherche(a,nouv);
+			if(checkExistence(nouv.condu[0],temp->elmt->condu)==0){
+				 temp->elmt->nbconducteurs++;
+			}
+			if(checkExistence(nouv.trajet[0],a->elmt->trajet)==0){
+				 temp->elmt->nbtrajets++;
+			}
+		}
+		else{
+			insertAVL(a,nouv);
+		}*/
+	}
+	return a;
+}
+
+Ville maxAVL(a){
+	if(filsDroit(a)==1){
+		return maxAVL(a->fd);
+	}
+	else{
+		return a;
 	}
 }
 
+pArbre supprmaxAVL(a){
+	if(filsDroit(a)==1){
+		return supprmaxAVL(a->fd);
+	}
+	else{
+		if(a->fg==NULL){
+			free(a);
+			return NULL;
+		}
+		else{
+			pArbre temp;
+			temp=a;
+			a=a->fg;
+			free(temp);
+			return a;
+		}
+	}
+}
 
+Top podium(a){
+	Top visite;
+	for(int x,x<10,x++){
+		visite.tab[x]=maxAVL(a->elmt);
+		a=supprmaxAVL(a);
+	}
+	return visite;
+}
 
 int main(int argc, char ** argv){
 	FILE* fichier=NULL;
-	fichier=fopen("data2.csv","r");
+	fichier=fopen("data.csv","r");
 	if(fichier==NULL){
 		exit(1);
 	}
 	pArbre a=NULL;
 	int* h=malloc(sizeof(int));
-	T(fichier,a,h);
+	a=T(fichier,a,h);
 	free(h);
 	fclose(fichier);
 	return 0;
