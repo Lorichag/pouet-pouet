@@ -51,11 +51,21 @@ fi
 
 #Zone de test
 
+#Objectif créer une nouvelle commande qui permet de rechercher le Prenom et le nom d'une personne dans le fichier
+
+echo "Quelle prenom voulez vous rechercher (Prenom NOM exemple: John COSTA) ? "
+read prenom
+#Faire un if si la personne n'existe pas
+if [  ]
+awk -F';' -v prenom="$prenom" '$6~ prenom { print $0 ;}' data.csv | sort -t';' -n -k1 -k2 > "$prenom.csv"
 
 
 
+#awk -F';' '/32974;/ { print $0 ;}' data.csv | sort -t';' -k5n > caca.csv   #Affiche le trajet 105995
 
+#Pour lolo
 
+#Pour chaque ville compter le nombre de trajet different et le nombre de fois ou ils sont à l'étape 1
 
 
 
@@ -66,8 +76,18 @@ fi
 
 if [ "$1" == "-h" ]
 then
-	echo "Les regles" #A faire
+	echo "Voici les option pouvant être utilisé pour analyser notre fichier:
+.La commande -d1 permet d'afficher les 10 conducteurs ayant fait le plus de trajet.
+.La commande -d2 permet d'afficher les 10 conducteurs ayant parcourus la plus grande distance durant leur trajet.
+.La commande -l permet d'afficher les 10 plus long trajet en distance.
+.La commande -t permet d'afficher les 10 villes les plus traversé.
+.La commande -s permet d'afficher une moyenne de distance entre chaque étape d'un trajet." #A faire
 else
+
+
+
+
+
 	for i in `seq 1 $#`
 do
 	case  ${!i} in
