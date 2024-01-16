@@ -11,9 +11,10 @@ set xtics rotate
 set y2tics rotate 
 set y2label 'DISTANCE TOTALE PARCOURUE'
 set xlabel 'NOMS DES CONDUCTEURS'
-set ylabel 'Option -d1 : Conducteurs et la plus grande distance'
+set ylabel 'Option -d2 : Conducteurs et la plus grande distance'
 unset ytics; set y2tics mirror
 set datafile separator ';'
-plot 'result2.csv' using 2:xticlabels(1) axes x1y2 notitle
+plot 'result2.csv' using 2:xticlabels(1) axes x1y2 notitle linecolor 4
 EOF
 convert -rotate 90 graphvertical2.png figure2.png 
+mv figure2.png fichier

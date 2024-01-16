@@ -14,6 +14,7 @@ set xlabel 'NOMS DES CONDUCTEURS'
 set ylabel 'Option -d1 : Conducteurs avec le plus de trajets '
 unset ytics; set y2tics mirror
 set datafile separator ';'
-plot 'result.csv' using 2:xticlabels(1) axes x1y2 notitle
+plot 'result.csv' using 2:xticlabels(1) axes x1y2 notitle linecolor 4
 EOF
 convert -rotate 90 graphvertical.png figure.png 
+mv figure.png fichier
