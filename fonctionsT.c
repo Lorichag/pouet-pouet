@@ -1,6 +1,4 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include <string.h>
+#include "fonctions.h"
 //strcmp
 typedef struct ville{
 // la structure ville qui contient 3 paramètres: le nom de la ville, le nombre de trajets qui passe par la ville et le nombre de fois que la ville est ville de départ d'une étape
