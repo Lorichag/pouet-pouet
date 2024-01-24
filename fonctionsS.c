@@ -1,6 +1,4 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include <string.h>
+#include "fonctions.h"
 //strcmp
 typedef struct trajet{
 // la structure trajet qui contient 4 paramètres: l'id du trajet, la moyenne des distances du trajet, la distance maximale d'étape du trajet et la distance minimale d'étape du trajet
