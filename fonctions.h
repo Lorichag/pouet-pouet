@@ -29,7 +29,7 @@ typedef struct trajet{
 	int id;
 	float moy;
 	int max;
-	int min
+	int min;
 }Trajet;
 
 typedef struct top2{
