@@ -1,5 +1,6 @@
 #include "fonctions.h"
 //strcmp
+/*
 typedef struct ville{
 // la structure ville qui contient 3 paramètres: le nom de la ville, le nombre de trajets qui passe par la ville et le nombre de fois que la ville est ville de départ d'une étape
 	char nom[1000];
@@ -21,7 +22,7 @@ typedef struct arbre{
 }Arbre;
 
 typedef Arbre * pArbre;	
-
+*/
 int min(int a,int b){
 //fonction qui retourne la plus petite des 2 valeurs entrées en paramètres
 	if(a<=b){
@@ -298,7 +299,7 @@ pArbre T(FILE* fichier,pArbre a,int* h){
 	return a;
 }
 
-
+/*
 int main(int argc, char ** argv){
 	FILE* fichier=NULL;
 	fichier=fopen("tempst.csv","r");
@@ -312,4 +313,4 @@ int main(int argc, char ** argv){
 	fclose(fichier);
 	return 0;
 }
-
+*/
