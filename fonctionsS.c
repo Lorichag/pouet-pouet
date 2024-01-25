@@ -297,7 +297,7 @@ pArbre2 S(FILE* fichier,pArbre2 a,int* h){
 	Top2 dix;	//On crée un élément de la structure top2
 	dix.tab=malloc(sizeof(Trajet)*10); // On initialise le tableau de la structure Top2   
 	dix=podium2(a); // on rentre les valeurs dans le tableau
-	dix.tab=tri2(dix.tab); // on tri le tableau
+//	dix.tab=tri2(dix.tab); // on tri le tableau
 	sauvegarde2(dix); // on ecrit le tableau dans un fichier csv
 	return a;
 }
