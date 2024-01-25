@@ -10,7 +10,6 @@ int main(int argc, char ** argv){
 		}
 		pArbre a=NULL;
 		a=T(fichier,a,h);
-		free(h);
 		fclose(fichier);
 	}
 	else if(argv[1]="-s"){
@@ -20,8 +19,8 @@ int main(int argc, char ** argv){
 		}
 		pArbre2 a=NULL;
 		a=S(fichier,a,h);
-		free(h);
 		fclose(fichier);
 	}
+	free(h);
 	return 0;
 }
