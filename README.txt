@@ -14,6 +14,7 @@ Différents traîtements sont exigés :
 Dans notre devoir un traîtement suplémentaire est présenté :
 - le traîtement - , qui permet d'avoir toutes les informations d'un conducteur
 
-Pour compiler notre programme veuillez (  instructions  )
+Pour compiler notre programme veuillez saisir le chemin du fichier data.csv puis la commande voulu entre -d1 -d2 -l -t -s . 
+vous pouvez également saisir l'options -h pour recevoir de l'aide. 
 
-Ce programme a été réalisé par Guesdon Axel, Hagard Loric et Tsybulskaya Anastasia, étudiants de préing 2, groupe 1 de CY-tech
+Ce programme a été réalisé par Guesdon Axel, Hagard Loric et Tsybulskaya Anastasia, étudiants de préing 2, groupe 1 de CY-tech: 
