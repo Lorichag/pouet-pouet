@@ -1,3 +1,4 @@
+#Ce makefile a été réalisé par chatgpt (n'ayant pas réussi à faire fonctionner le mien)
 # Makefile pour compiler le programme
 
 # Compilateur
