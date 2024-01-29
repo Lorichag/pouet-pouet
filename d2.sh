@@ -16,7 +16,8 @@ set xlabel 'NOMS DES CONDUCTEURS'
 set ylabel 'Option -d2 : Conducteurs et la plus grande distance'
 unset ytics; set y2tics mirror
 set datafile separator ';'
-plot 'result2.csv' using 2:xticlabels(1) axes x1y2 notitle linecolor rgb green
+plot 'resultd2.csv' using 2:xticlabels(1) axes x1y2 notitle linecolor rgb green
 EOF
-convert -rotate 90 graphvertical2.png figure2.png 
-mv figure2.png fichier
+convert -rotate 90 graphvertical2.png figured2.png 
+mv figured2.png images
+rm "graphvertical2.png" 
