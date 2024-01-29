@@ -237,7 +237,7 @@ void sauvegarde2(Top2 premier){
 	}
 	for(int i=0;i<50;i++){
 	// On écrit dans le fichier les 50 trajets
-		fprintf(fichier,"%d;%d;%f;%f;%f\n",i,premier.tab[i].id,premier.tab[i].moy,premier.tab[i].min,premier.tab[i].max);
+		fprintf(fichier,"%d;%d;%f;%f;%f\n",i+1,premier.tab[i].id,premier.tab[i].moy,premier.tab[i].min,premier.tab[i].max);
 	}
 	fclose(fichier);
 }
