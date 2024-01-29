@@ -2,6 +2,8 @@
 
 gnuplot << EOF
 set terminal png size 800,800
+set term png font "Cambria,14"
+green = "#008000"
 set style data histogram
 set style histogram cluster gap 1
 set style fill solid border -1
@@ -14,7 +16,7 @@ set xlabel 'NOMS DES CONDUCTEURS'
 set ylabel 'Option -d1 : Conducteurs avec le plus de trajets '
 unset ytics; set y2tics mirror
 set datafile separator ';'
-plot 'result.csv' using 2:xticlabels(1) axes x1y2 notitle linecolor 4
+plot 'result.csv' using 2:xticlabels(1) axes x1y2 notitle linecolor rgb green
 EOF
 convert -rotate 90 graphvertical.png figure.png 
 mv figure.png fichier
