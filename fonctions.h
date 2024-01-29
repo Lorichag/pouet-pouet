@@ -28,8 +28,8 @@ typedef struct trajet{
 // la structure trajet qui contient 4 paramètres: l'id du trajet, la moyenne des distances du trajet, la distance maximale d'étape du trajet et la distance minimale d'étape du trajet
 	int id;
 	float moy;
-	int max;
-	int min;
+	float max;
+	float min;
 }Trajet;
 
 typedef struct top2{
