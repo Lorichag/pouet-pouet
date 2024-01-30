@@ -20,7 +20,7 @@ if [ ! -x "$FICHIER" ]
 then
 	cd progc
 	echo "L'executable n'existe pas"
-	gcc -o exe camion.c 
+	make 
 	cd ..
 	if [ ! -x "$FICHIER" ]
 	then
@@ -47,7 +47,10 @@ fi
 if [ ! -d "$IMAGE" ]
 then
 	mkdir images
+else
+	mv images/* demo/
 fi
+
 
 cp $0 data
 
@@ -138,6 +141,7 @@ do
 			grep ";1;" data.csv | cut -d';' -f6 | sort -d | LC_NUMERIC=C awk -F";" '{ line = $0 ; gsub(/\r/,"",line); if (line==pre_line) COUNT++; else {print pre_line ";" COUNT ;COUNT = 1}; pre_line = line;}' | sort -t';' -n -r -k2 | head -10 > resultd1.csv
 			cat resultd1.csv				
 			bash d1.sh
+			mv resultd1.csv temp
 			duration=$(( SECONDS - start ))
 			echo "Le programme à mis $duration secondes ";;
 			
@@ -150,6 +154,7 @@ do
 			LC_NUMERIC=C awk -F';' '{ camion[$6] += $5 ;} END { for (key in camion)print key ";" camion[key] ;}' data.csv | sort -t";" -k2nr | head -10 > resultd2.csv
 			cat resultd2.csv
 			bash d2.sh
+			mv resultd2.csv temp
 			duration=$(( SECONDS - start ))
 			echo "Le programme à mis $duration secondes ";;
 			
@@ -164,6 +169,7 @@ do
 			LC_NUMERIC=C awk -F';' '{ camion[$1] += $5 ;} END { for (key in camion)print key ";" camion[key]"km" ;}' data.csv | sort -t";" -k2nr | head -10 > resultl.csv
 			cat resultl.csv 
 			bash l.sh
+			mv resultl.csv temp
 			duration=$(( SECONDS - start ))
 			echo "Le programme à mis $duration secondes ";;
 			
@@ -177,8 +183,6 @@ do
 			if [ ! -s temp/"$prenom.csv" ]; then
   			echo "Aucune personne avec le prénom $prenom n'a été trouvée."
     			`rm temp/"$prenom.csv"`
-    			else
-    			cat temp/"$prenom.csv"
 			fi 
 			duration=$(( SECONDS - start ))
 			echo "Le programme à mis $duration secondes ";;
@@ -189,9 +193,12 @@ do
 			start=$SECONDS	
 			awk -F";" 'NR>1{count[$1";"$4]+=1 ; if($2==1) {count[$1";"$3]+=1;deb[$1";"$3]=1}} END{for(line in count) print line ";" count[line]";"deb[line]}' data.csv > t.csv
 			awk -F";" '{count[$2]+=1;deb[$2]+=$4} END {for(line in count) print line ";" count[line]";"deb[line]}' t.csv > tempst.csv
-			make cleanobj
-			./mon_programme -t
+			#make cleanobj
+			./progc/mon_programme -t
 			bash t.sh
+			mv tempst.csv temp
+			mv t.csv temp
+			mv T.csv temp
 			duration=$(( SECONDS - start ))
 			echo "Le programme à mis $duration secondes ";;
 		
@@ -203,10 +210,12 @@ do
 		'-s')echo "Affiche la moyenne le max et le min pour les 50 plus grandes distances(max-min)"
 		start=$SECONDS	
 		LC_NUMERIC=C awk -F';' '{ camion_sum[$1] += $5;camion_count[$1]+=1;if ($5 > max_value[$1]) max_value[$1]=$5; if ($5 < min_value[$1] || min_value[$1]=="") min_value[$1]=$5;}END {for (line in camion_sum) {print line ";" camion_sum[line]/camion_count[line] ";" min_value[line] ";" max_value[line]}}' data.csv > tempss.csv 
-			make 
-			make cleanobj
-			./mon_programme -s
+			#make 
+			#make cleanobj
+			./progc/mon_programme -s
 			bash s.sh
+			mv tempss.csv temp
+			mv S.csv temp
 			duration=$(( SECONDS - start ))
 			echo "Le programme à mis $duration secondes ";;
 		
