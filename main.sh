@@ -1,14 +1,23 @@
 #!/bin/bash
 
-DATA=~/Info-Preing2/Projet/data.csv   #emplacement du fichier.csv
-FICHIER=~/Info-Preing2/Projet/progc/exe  #emplacement du fichier.c
-TEMP=~/Info-Preing2/Projet/temp
-IMAGE=~/Info-Preing2/Projet/images
-#Verifier si le fichier data.csv existe
-if [ ! -f "$DATA" ]
+DATA=data.csv   #emplacement du fichier.csv
+DATA2=data/data.csv    #emplacement du fichier.csv
+FICHIER=progc/exe  #emplacement du fichier.c
+TEMP=temp	#emplacement du dossier
+IMAGE=images  #emplacement du dossier
+
+
+
+if [ ! -f "$DATA2" ]
 then
-	echo "Le fichier n'existe pas"
-		echo "Erreur l'executable n'existe toujours pas"
+	mv data.csv data
+fi
+
+#Verifier si le fichier data.csv existe
+if [ ! -f "$DATA2" ]
+then
+	echo "Le fichier data.csv n'existe pas dans le fichier data"
+	exit 1
 else
 	echo "Le fichier data existe"
 fi
@@ -20,7 +29,7 @@ if [ ! -x "$FICHIER" ]
 then
 	cd progc
 	echo "L'executable n'existe pas"
-	make 
+	make cleanobj
 	cd ..
 	if [ ! -x "$FICHIER" ]
 	then
@@ -33,7 +42,7 @@ else
 fi
 
 
-#Verifie si le dossier temp existe si il existe déja il faut suprimer tout les fichier à l'interieur sion on le créer
+#Verifie si le dossier temp existe si il existe déja il faut suprimer tout les fichiers à l'interieur sion on le créer
 
 if [ ! -d "$TEMP" ]
 then
@@ -52,72 +61,6 @@ else
 fi
 
 
-cp $0 data
-
-
-
-
-
-#Zone de test
-
-
-
-
-#awk -F';' '/32974;/ { print $0 ;}' data.csv | sort -t';' -k5n > caca.csv   #Affiche le trajet 105995
-
-#Pour lolo
-
-
-
-#Etape 1
-
-
-#awk -F';' '/;1;/{ camion[$3] += 1 ;} END { for (key in camion)print key ";" camion[key] ;}' data.csv > lolo.csv
-
-#awk -F';' '{print $4 ";" $1}' data.csv | awk -F";" '{ line = $0 ; gsub(/\r/,"",line); if (line==pre_line) COUNT+=1; else {print pre_line ";" COUNT ;COUNT = 1}; pre_line = line;}' > lolo2.csv
-
-#awk -F';' '{ camion[$1] += 1 ;} END { for (key in camion)print key ";" camion[key] ;}' lolo2.csv > lolo3.csv
-
-#awk -F ';' 'NR==FNR { a[$1]=$2; next } { print $0 ";" a[$1] ;}' lolo3.csv lolo.csv > resultat.csv 
-
-
-#ETAPE 1 MATHIS 
-
-#awk -F";" 'NR>1{count[$1";"$4]+=1 ; if($2==1) {count[$1";"$3]+=1;deb[$1";"$3]=1}} END{for(line in count) print line ";" count[line]";"deb[line]}' data.csv > t.csv
-#awk -F";" '{count[$2]+=1;deb[$2]+=$4} END {for(line in count) print line ";" count[line]";"deb[line]}' t.csv > tempst.csv
-
-
-
-
-# Etape 2
-
-#LC_NUMERIC=C awk -F';' 'NR>1 {if ($5 > max_value[$1]) {max_value[$1] = $5;}}END { for (key in max_value) print key ";" max_value[key];}' data.csv > distmax.csv
-#LC_NUMERIC=C awk -F';' 'NR>1 { if ($5 < min_value[$1] || min_value[$1]=="") min_value[$1] = $5;}END { for (key in min_value) print key ";" min_value[key];}' data.csv > distmin.csv
-
-
-#LC_NUMERIC=C awk -F';' '{ camion_sum[$1] += $5;camion_count[$1]+=1;if ($5 > max_value[$1]) max_value[$1]=$5; if ($5 < min_value[$1] || min_value[$1]=="") min_value[$1]=$5;}END {for (line in camion_sum) {print line ";" camion_sum[line]/camion_count[line] ";" min_value[line] ";" max_value[line]}}' data.csv > tempss.csv 
-
-
-
-#awk -F ';' 'NR==FNR { a[$1]=$2; next } { print $0 ";" a[$1] ;}' distmin.csv distmoy1.csv > LOLO.csv 
-#awk -F ';' 'NR==FNR { a[$1]=$2; next } { print $0 ";" a[$1] ;}' distmax.csv LOLO.csv > AH.csv 
-  
-  
-  
-  
-           
-#awk -F';' 'NR>1{ camion[$1] += $5 ;} END { for (key in camion)print key ";" camion[key]"km" ;}' data.csv | sort -t";" -k2n > distmin.csv
-
-
-#Pour chaque ville compter le nombre de trajet different et le nombre de fois ou ils sont à l'étape 1
-
-
-
-#Apprendre awk
-#https://www.malekal.com/awk-utilisation-et-exemples-fonctions-operateurs-et-boucles/
-#https://www.malekal.com/comment-utiliser-la-commande-awk-avec-des-exemples/
-
-
 for i in `seq 1 $#`
 do
  if [ "${!i}" == "-h" ]
@@ -128,7 +71,9 @@ do
 	.La commande -l permet d'afficher les 10 plus longs trajets en distance.
 	.La commande -t permet d'afficher les 10 villes les plus traversées.
 	.La commande -s permet d'afficher une moyenne de distance entre chaque étape d'un trajet. 
-	.[BONUS] La commande -ch permet de chercher un conducteur et d'afficher toute ça fiche trajet "
+	.[BONUS] La commande -ch permet de chercher un conducteur et d'afficher toute ça fiche trajet
+	.[BONUS] La commande -id permet de chercher un id et d'afficher toutes ces étapes "
+	
 	exit 0
 fi	
 done
@@ -137,25 +82,21 @@ for i in `seq 1 $#`
 do
 	case  ${!i} in
 		'-d1')echo "Voici la liste des 10 conducteurs ayant fait le plus de trajets different" #Plus grand trajet garder les 10 premier conducteur en duree de trajet 
-			start=$SECONDS	
-			grep ";1;" data.csv | cut -d';' -f6 | sort -d | LC_NUMERIC=C awk -F";" '{ line = $0 ; gsub(/\r/,"",line); if (line==pre_line) COUNT++; else {print pre_line ";" COUNT ;COUNT = 1}; pre_line = line;}' | sort -t';' -n -r -k2 | head -10 > resultd1.csv
-			cat resultd1.csv				
-			bash d1.sh
+			debut=$SECONDS	
+			grep ";1;" data/data.csv | cut -d';' -f6 | sort -d | LC_NUMERIC=C awk -F";" '{ ligne = $0 ; gsub(/\r/,"",ligne); if (ligne==pre_ligne) COUNT++; else {print pre_ligne ";" COUNT ;COUNT = 1}; pre_ligne = ligne;}' | sort -t';' -n -r -k2 | head -10 > resultd1.csv				
+			bash Nuplot/d1.sh
 			mv resultd1.csv temp
-			duration=$(( SECONDS - start ))
+			duration=$(( SECONDS - debut ))
 			echo "Le programme à mis $duration secondes ";;
 			
 		
 		
 		'-d2')echo "Voici la liste des 10 conducteurs ayant parcourus la plus grande distance" #Plus grande distance garder les 10 premier conducteur en distance
-			start=$SECONDS	
-			#awk -F';' '{print $5 ";" $6}' data.csv | sort -t";" -k2 | awk -F";" '{ line = $2; gsub(/\r/,"",line); if (line==preline) COUNT += $1 ; else {print preline ";" COUNT ;COUNT = $1 };preline = line;}' | sort -t';' -n -r -k2 | head -10 > result2.csv
-			#cat result2.csv
-			LC_NUMERIC=C awk -F';' '{ camion[$6] += $5 ;} END { for (key in camion)print key ";" camion[key] ;}' data.csv | sort -t";" -k2nr | head -10 > resultd2.csv
-			cat resultd2.csv
-			bash d2.sh
+			debut=$SECONDS	
+			LC_NUMERIC=C awk -F';' '{ camion[$6] += $5 ;} END { for (ligne in camion)print key ";" camion[ligne] ;}' data/data.csv | sort -t";" -k2nr | head -10 > resultd2.csv
+			bash Nuplot/d2.sh
 			mv resultd2.csv temp
-			duration=$(( SECONDS - start ))
+			duration=$(( SECONDS - debut ))
 			echo "Le programme à mis $duration secondes ";;
 			
 			
@@ -163,68 +104,73 @@ do
 			
 			
 		'-l')echo "Voici la liste des 10 plus grands trajets" #Prendre la distance totale des 10 plus grands trajet
-			start=$SECONDS
-			#awk -F';' '{print $1 ";" $5}' data.csv | sort -t";" -n -k1 | awk -F";" '{ line = $1; gsub(/\r/,"",line); if (line==preline) COUNT += $2 ; else {print preline ";"  COUNT "km";COUNT = $2 };preline = line;}' | sort -t';' -n -r -k2 | head -10 > result3.csv
-			#cat result3.csv
-			LC_NUMERIC=C awk -F';' '{ camion[$1] += $5 ;} END { for (key in camion)print key ";" camion[key]"km" ;}' data.csv | sort -t";" -k2nr | head -10 > resultl.csv
-			cat resultl.csv 
-			bash l.sh
+			debut=$SECONDS
+			LC_NUMERIC=C awk -F';' '{ camion[$1] += $5 ;} END { for (ligne in camion)print key ";" camion[ligne]"km" ;}' data/data.csv | sort -t";" -k2nr | head -10 > resultl.csv
+			bash Nuplot/l.sh
 			mv resultl.csv temp
-			duration=$(( SECONDS - start ))
+			duration=$(( SECONDS - debut ))
 			echo "Le programme à mis $duration secondes ";;
 			
-		'-ch')echo "Voici la liste des trajets de $prenom"
+		'-ch')echo "Voici la liste des trajets du prenom choisit"
 			#Objectif créer une nouvelle commande qui permet de rechercher le Prenom et le nom d'une personne dans le fichier
 
 			echo "Quel conducteur voulez vous rechercher (Prenom Nom exemple: John Costa) ? "
 			read prenom
-			start=$SECONDS	
-			awk -F';' -v prenom="$prenom" 'tolower($6) ~ tolower(prenom) { print $0 ;}' data.csv | sort -t';' -n -k1 -k2 > temp/"$prenom.csv"
+			debut=$SECONDS	
+			awk -F';' -v prenom="$prenom" 'tolower($6) ~ tolower(prenom) { print $0 ;}' data/data.csv | sort -t';' -n -k1 -k2 > temp/"$prenom.csv"
 			if [ ! -s temp/"$prenom.csv" ]; then
-  			echo "Aucune personne avec le prénom $prenom n'a été trouvée."
+  			echo "Aucune personne avec le prénom $prenom n'a été trouvée"
     			`rm temp/"$prenom.csv"`
 			fi 
-			duration=$(( SECONDS - start ))
+			duration=$(( SECONDS - debut ))
 			echo "Le programme à mis $duration secondes ";;
 			
+			
+		'-id')echo "Voici la liste des étape de l'id choisit"
+			#Objectif créer une nouvelle commande qui permet de rechercher un id dans le fichier data et d'afficher les information sur les trajet de cet id
+
+			echo "Quel id voulez vous rechercher ? "
+			read id
+			debut=$SECONDS	
+			awk -F';' -v id="$id" '{if ($1 == id) print $0;}' data/data.csv | sort -t';' -n -k2 > temp/"$id.csv"
+			if [ ! -s temp/"$id.csv" ]; then
+  			echo "Aucune personne avec l'id $id n'a été trouvée"
+    			`rm temp/"$id.csv"`
+			fi 
+			duration=$(( SECONDS - debut ))
+			echo "Le programme à mis $duration secondes ";;	
 			
 
 		'-t')echo "Affiche les 10 villes les plus traversées"
-			start=$SECONDS	
-			awk -F";" 'NR>1{count[$1";"$4]+=1 ; if($2==1) {count[$1";"$3]+=1;deb[$1";"$3]=1}} END{for(line in count) print line ";" count[line]";"deb[line]}' data.csv > t.csv
-			awk -F";" '{count[$2]+=1;deb[$2]+=$4} END {for(line in count) print line ";" count[line]";"deb[line]}' t.csv > tempst.csv
-			#make cleanobj
+			debut=$SECONDS	
+			awk -F";" 'NR>1{calcul[$1";"$4]+=1 ; if($2==1) {calcul[$1";"$3]+=1;temp[$1";"$3]=1}} END{for(ligne in calcul) print ligne ";" calcul[ligne]";"temp[ligne]}' data/data.csv > t.csv
+			awk -F";" '{calcul[$2]+=1;temp[$2]+=$4} END {for(ligne in calcul) print ligne ";" calcul[ligne]";"temp[ligne]}' t.csv > tempst.csv
 			./progc/mon_programme -t
-			bash t.sh
+			bash Nuplot/t.sh
 			mv tempst.csv temp
 			mv t.csv temp
 			mv T.csv temp
-			duration=$(( SECONDS - start ))
+			duration=$(( SECONDS - debut ))
 			echo "Le programme à mis $duration secondes ";;
 		
 
-		
-		
-		
-		
-		'-s')echo "Affiche la moyenne le max et le min pour les 50 plus grandes distances(max-min)"
-		start=$SECONDS	
-		LC_NUMERIC=C awk -F';' '{ camion_sum[$1] += $5;camion_count[$1]+=1;if ($5 > max_value[$1]) max_value[$1]=$5; if ($5 < min_value[$1] || min_value[$1]=="") min_value[$1]=$5;}END {for (line in camion_sum) {print line ";" camion_sum[line]/camion_count[line] ";" min_value[line] ";" max_value[line]}}' data.csv > tempss.csv 
-			#make 
-			#make cleanobj
+		'-s')echo "Affiche la moyenne,le max,le min pour les 50 plus grandes distances(max-min)"
+		debut=$SECONDS	
+		LC_NUMERIC=C awk -F';' '{ camion[$1] += $5;camion_calcul[$1]+=1;if ($5 > max[$1]) max[$1]=$5; if ($5 < min[$1] || min[$1]=="") min[$1]=$5;}END {for (ligne in camion) {print ligne ";" camion[ligne]/camion_calcul[ligne] ";" min[ligne] ";" max[ligne]}}' data/data.csv > tempss.csv 
 			./progc/mon_programme -s
-			bash s.sh
+			bash Nuplot/s.sh
 			mv tempss.csv temp
 			mv S.csv temp
-			duration=$(( SECONDS - start ))
+			duration=$(( SECONDS - debut ))
 			echo "Le programme à mis $duration secondes ";;
 		
 		
-		*) echo "Erreur l'option  ${!i} n'existe pas" ;;
+		*) debut=$SECONDS
+			echo "Erreur l'option  ${!i} n'existe pas" 
+			duration=$(( SECONDS - debut ))
+			echo "Le programme à mis $duration secondes ";;
 	esac
 done
-
-
 
 
 
