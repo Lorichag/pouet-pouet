@@ -12,9 +12,12 @@ Différents traîtements sont exigés :
 - le traitement -s, qui donnerait un graphique qui fusionne trois courbes qui présentent les distances (min,max,moyenne) pour chaque étape en fonction du trajet
 
 Dans notre devoir un traîtement suplémentaire est présenté :
-- le traîtement - , qui permet d'avoir toutes les informations d'un conducteur
+- le traîtement -ch , qui permet d'avoir toutes les informations d'un conducteur
+- le traitement -id , qui permet d'avoir toutes les information d'un trajet
 
-Pour compiler notre programme veuillez saisir le chemin du fichier data.csv puis la commande voulu entre -d1 -d2 -l -t -s . 
+Pour compiler notre programme veuillez saisir le chemin du fichier data.csv puis la commande voulu entre -d1 -d2 -l -t -s -id -ch. 
 vous pouvez également saisir l'options -h pour recevoir de l'aide. 
+
+Information supplémentaire le Dossier data ce créera automatiquement si il n'existe pas et mettras le fichier data dans le dossier (Car je n'arrive pas à créer un dossier vide sur github)
 
 Ce programme a été réalisé par Guesdon Axel, Hagard Loric et Tsybulskaya Anastasia, étudiants de préing 2, groupe 1 de CY-tech.
