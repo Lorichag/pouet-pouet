@@ -8,7 +8,7 @@ IMAGE=images  #emplacement du dossier
 
 
 
-if [ ! -f "$DATA2" ]
+if [ ! -f "$DATA" ]
 then
 	mv data.csv data
 fi
