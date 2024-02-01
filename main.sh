@@ -1,14 +1,18 @@
 #!/bin/bash
 
-DATA=data.csv   #emplacement du fichier.csv
+DATA=data
+DATA1=data.csv   #emplacement du fichier.csv
 DATA2=data/data.csv    #emplacement du fichier.csv
 FICHIER=progc/exe  #emplacement du fichier.c
 TEMP=temp	#emplacement du dossier
 IMAGE=images  #emplacement du dossier
 
+if [ ! -d "$DATA" ]
+then
+	mkdir data
+fi
 
-
-if [ ! -f "$DATA" ]
+if [ -f "$DATA1" ]
 then
 	mv data.csv data
 fi
