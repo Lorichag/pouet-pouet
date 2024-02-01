@@ -18,6 +18,6 @@ Dans notre devoir un traîtement suplémentaire est présenté :
 Pour compiler notre programme veuillez saisir le chemin du fichier data.csv puis la commande voulu entre -d1 -d2 -l -t -s -id -ch. 
 vous pouvez également saisir l'options -h pour recevoir de l'aide. 
 
-Information supplémentaire le Dossier data ce créera automatiquement si il n'existe pas et mettras le fichier data dans le dossier (Car je n'arrive pas à créer un dossier vide sur github)
+Information supplémentaire le Dossier data se créera automatiquement s'il n'existe pas et mettra le fichier data dans le dossier (Car nous n'arrivons pas à créer un dossier vide sur Github)
 
 Ce programme a été réalisé par Guesdon Axel, Hagard Loric et Tsybulskaya Anastasia, étudiants de préing 2, groupe 1 de CY-tech.
