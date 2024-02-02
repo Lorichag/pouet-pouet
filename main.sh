@@ -97,7 +97,8 @@ do
 		
 		'-d2')echo "Voici la liste des 10 conducteurs ayant parcourus la plus grande distance" #Plus grande distance garder les 10 premier conducteur en distance
 			debut=$SECONDS	
-			LC_NUMERIC=C awk -F';' '{ camion[$6] += $5 ;} END { for (ligne in camion)print key ";" camion[ligne] ;}' data/data.csv | sort -t";" -k2nr | head -10 > resultd2.csv
+			LC_NUMERIC=C awk -F';' '{ camion[$6] += $5 ;} END { for (ligne in camion)print ligne ";" camion[ligne] ;}' data/data.csv | sort -t";" -k2nr | head -10 > resultd2.csv
+			cat resultd2.csv
 			bash Nuplot/d2.sh
 			mv resultd2.csv temp
 			duration=$(( SECONDS - debut ))
@@ -109,7 +110,8 @@ do
 			
 		'-l')echo "Voici la liste des 10 plus grands trajets" #Prendre la distance totale des 10 plus grands trajet
 			debut=$SECONDS
-			LC_NUMERIC=C awk -F';' '{ camion[$1] += $5 ;} END { for (ligne in camion)print key ";" camion[ligne]"km" ;}' data/data.csv | sort -t";" -k2nr | head -10 > resultl.csv
+			LC_NUMERIC=C awk -F';' '{ camion[$1] += $5 ;} END { for (ligne in camion)print ligne ";" camion[ligne]"km" ;}' data/data.csv | sort -t";" -k2nr | head -10 > resultl.csv
+			cat resultl.csv
 			bash Nuplot/l.sh
 			mv resultl.csv temp
 			duration=$(( SECONDS - debut ))
